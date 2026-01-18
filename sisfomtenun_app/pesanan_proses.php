@@ -32,7 +32,7 @@ if (isset($_POST['aksi'])) {
 
             foreach ($items as $item) {
                 $id_product = $item['id_product'];
-                $qty = $item['jumlah_produk'];
+                $qty = isset($item['jumlah']) ? $item['jumlah'] : (isset($item['jumlah_produk']) ? $item['jumlah_produk'] : 0);
                 $harga = $item['harga_satuan'];
                 $subtotal = $item['subtotal'];
 

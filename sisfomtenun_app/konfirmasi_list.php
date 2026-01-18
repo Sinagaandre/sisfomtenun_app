@@ -11,6 +11,7 @@
     <div class="alert alert-<?php echo strpos($_GET['status'], 'success') !== false ? 'success' : 'danger'; ?> alert-dismissible fade show border-0 shadow-sm mb-4" role="alert">
         <?php 
             if($_GET['status'] == 'success_tambah') echo '<i class="fas fa-check-circle me-2"></i> <strong>Berhasil!</strong> Konfirmasi pembayaran telah dikirim.';
+            elseif($_GET['status'] == 'success_edit') echo '<i class="fas fa-check-circle me-2"></i> <strong>Berhasil!</strong> Data konfirmasi telah diperbarui.';
             elseif($_GET['status'] == 'success_update') echo '<i class="fas fa-check-circle me-2"></i> <strong>Berhasil!</strong> Status konfirmasi telah diperbarui.';
             elseif($_GET['status'] == 'success_hapus') echo '<i class="fas fa-check-circle me-2"></i> <strong>Berhasil!</strong> Data konfirmasi telah dihapus.';
             else echo '<i class="fas fa-times-circle me-2"></i> <strong>Gagal!</strong> Terjadi kesalahan sistem.';
@@ -77,6 +78,9 @@
                                 <button type="button" class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#modalVerifikasi<?php echo $row['id_konfirmasi']; ?>" title="Verifikasi">
                                     <i class="fas fa-user-check"></i>
                                 </button>
+                                <a href="konfirmasi.php?id=<?php echo $row['id_konfirmasi']; ?>" class="btn btn-sm btn-outline-warning" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
                                 <a href="konfirmasi_proses.php?aksi=hapus&id=<?php echo $row['id_konfirmasi']; ?>" class="btn btn-sm btn-outline-danger" onclick="return confirm('Yakin ingin menghapus data konfirmasi ini?')" title="Hapus">
                                     <i class="fas fa-trash"></i>
                                 </a>

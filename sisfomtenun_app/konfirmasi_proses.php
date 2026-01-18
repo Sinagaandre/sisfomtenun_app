@@ -18,12 +18,20 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['aksi'])) {
             if (!file_exists($target_dir)) {
                 mkdir($target_dir, 0777, true);
             }
-            $file_extension = pathinfo($_FILES["bukti_bayar"]["name"], PATHINFO_EXTENSION);
-            $new_filename = "konf_" . $id_pesanan . "_" . time() . "." . $file_extension;
-            $target_file = $target_dir . $new_filename;
+            
+            $allowed_types = ['jpg', 'jpeg', 'png', 'pdf'];
+            $file_extension = strtolower(pathinfo($_FILES["bukti_bayar"]["name"], PATHINFO_EXTENSION));
+            
+            if (in_array($file_extension, $allowed_types)) {
+                $new_filename = "konf_" . $id_pesanan . "_" . time() . "." . $file_extension;
+                $target_file = $target_dir . $new_filename;
 
-            if (move_uploaded_file($_FILES["bukti_bayar"]["tmp_name"], $target_file)) {
-                $bukti_bayar = $new_filename;
+                if (move_uploaded_file($_FILES["bukti_bayar"]["tmp_name"], $target_file)) {
+                    $bukti_bayar = $new_filename;
+                }
+            } else {
+                header("Location: konfirmasi.php?status=error_file_type");
+                exit();
             }
         }
 
@@ -39,6 +47,58 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['aksi'])) {
             header("Location: konfirmasi.php?status=error");
         }
         $stmt->close();
+    } elseif ($_POST['aksi'] == 'edit') {
+        $id_konfirmasi = mysqli_real_escape_string($conn, $_POST['id_konfirmasi']);
+        $id_pesanan = mysqli_real_escape_string($conn, $_POST['id_pesanan']);
+        $nama_pengirim = mysqli_real_escape_string($conn, $_POST['nama_pengirim']);
+        $bank_asal = mysqli_real_escape_string($conn, $_POST['bank_asal']);
+        $jumlah_bayar = mysqli_real_escape_string($conn, $_POST['jumlah_bayar']);
+        $tanggal_bayar = mysqli_real_escape_string($conn, $_POST['tanggal_bayar']);
+        $catatan = mysqli_real_escape_string($conn, $_POST['catatan']);
+
+        $stmt = null;
+        // Handle File Upload if new file is provided
+        if (isset($_FILES['bukti_bayar']) && $_FILES['bukti_bayar']['error'] == 0) {
+            $target_dir = "assets/img/konfirmasi/";
+            $allowed_types = ['jpg', 'jpeg', 'png', 'pdf'];
+            $file_extension = strtolower(pathinfo($_FILES["bukti_bayar"]["name"], PATHINFO_EXTENSION));
+            
+            if (in_array($file_extension, $allowed_types)) {
+                // Delete old file
+                $res = $conn->query("SELECT bukti_bayar FROM konfirmasi_pembayaran WHERE id_konfirmasi = $id_konfirmasi");
+                if ($row = $res->fetch_assoc()) {
+                    if (!empty($row['bukti_bayar']) && file_exists($target_dir . $row['bukti_bayar'])) {
+                        @unlink($target_dir . $row['bukti_bayar']);
+                    }
+                }
+
+                $new_filename = "konf_" . $id_pesanan . "_" . time() . "." . $file_extension;
+                $target_file = $target_dir . $new_filename;
+
+                if (move_uploaded_file($_FILES["bukti_bayar"]["tmp_name"], $target_file)) {
+                    $sql = "UPDATE konfirmasi_pembayaran SET id_pesanan = ?, nama_pengirim = ?, bank_asal = ?, jumlah_bayar = ?, tanggal_bayar = ?, bukti_bayar = ?, catatan = ? WHERE id_konfirmasi = ?";
+                    $stmt = $conn->prepare($sql);
+                    $stmt->bind_param("issdsssi", $id_pesanan, $nama_pengirim, $bank_asal, $jumlah_bayar, $tanggal_bayar, $new_filename, $catatan, $id_konfirmasi);
+                } else {
+                    header("Location: konfirmasi.php?id=$id_konfirmasi&status=error_upload");
+                    exit();
+                }
+            } else {
+                header("Location: konfirmasi.php?id=$id_konfirmasi&status=error_file_type");
+                exit();
+            }
+        } else {
+            $sql = "UPDATE konfirmasi_pembayaran SET id_pesanan = ?, nama_pengirim = ?, bank_asal = ?, jumlah_bayar = ?, tanggal_bayar = ?, catatan = ? WHERE id_konfirmasi = ?";
+            $stmt = $conn->prepare($sql);
+            $stmt->bind_param("issdssi", $id_pesanan, $nama_pengirim, $bank_asal, $jumlah_bayar, $tanggal_bayar, $catatan, $id_konfirmasi);
+        }
+
+        if ($stmt && $stmt->execute()) {
+            header("Location: konfirmasi_list.php?status=success_edit");
+        } else {
+            header("Location: konfirmasi.php?id=$id_konfirmasi&status=error");
+        }
+        if ($stmt) $stmt->close();
     } elseif ($_POST['aksi'] == 'update_status') {
         $id_konfirmasi = mysqli_real_escape_string($conn, $_POST['id_konfirmasi']);
         $id_pesanan = mysqli_real_escape_string($conn, $_POST['id_pesanan']);
@@ -65,7 +125,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['aksi'])) {
     $res = $conn->query("SELECT bukti_bayar FROM konfirmasi_pembayaran WHERE id_konfirmasi = $id");
     if ($row = $res->fetch_assoc()) {
         if (!empty($row['bukti_bayar'])) {
-            @unlink("assets/img/konfirmasi/" . $row['bukti_bayar']);
+            $file_to_delete = "assets/img/konfirmasi/" . $row['bukti_bayar'];
+            if (file_exists($file_to_delete)) {
+                @unlink($file_to_delete);
+            }
         }
     }
 
