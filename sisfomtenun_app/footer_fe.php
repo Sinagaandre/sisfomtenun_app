@@ -15,7 +15,6 @@
                 <h5>Menu</h5>
                 <div class="footer-links">
                     <a href="index.php">Beranda</a>
-                    <a href="produk_tenun.php">Produk Tenun</a>
                     <a href="tentang_kami.php">Tentang Kami</a>
                 </div>
             </div>

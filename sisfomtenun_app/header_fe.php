@@ -147,6 +147,41 @@ include 'config.php';
         .footer-links a:hover {
             color: var(--secondary-color);
         }
+
+        /* Utility Overrides */
+        .bg-primary {
+            background-color: var(--primary-color) !important;
+        }
+        .text-primary {
+            color: var(--primary-color) !important;
+        }
+        .text-secondary {
+            color: var(--secondary-color) !important;
+        }
+        .border-primary {
+            border-color: var(--primary-color) !important;
+        }
+        .btn-warning {
+            background-color: var(--secondary-color);
+            border-color: var(--secondary-color);
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+        .btn-warning:hover {
+            background-color: #e6c200;
+            border-color: #e6c200;
+        }
+        
+        .text-maroon { color: var(--primary-color); }
+        .text-gold { color: var(--secondary-color); }
+        
+        /* Custom Shadows for Materialistic feel */
+        .shadow-soft {
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+        }
+        .shadow-strong {
+            box-shadow: 0 15px 45px rgba(0,0,0,0.1);
+        }
     </style>
 </head>
 <body>
@@ -166,7 +201,10 @@ include 'config.php';
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'index.php' ? 'active' : ''; ?>" href="index.php">Beranda</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'produk_tenun.php' ? 'active' : ''; ?>" href="produk_tenun.php">Produk Tenun</a>
+                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'beranda.php' ? 'active' : ''; ?>" href="beranda.php">Sejarah</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'profil.php' ? 'active' : ''; ?>" href="profil.php">Profil Pemilik</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link <?php echo basename($_SERVER['PHP_SELF']) == 'tentang_kami.php' ? 'active' : ''; ?>" href="tentang_kami.php">Tentang Kami</a>
