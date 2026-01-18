@@ -1,0 +1,130 @@
+/* 
+   Login Page Style for SISFOMTENUN App 
+   Karya Tulis Ilmiah - Kapita Selekta
+*/
+
+.login-body {
+    background-color: #f0f2f5;
+    height: 100vh;
+    margin: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Poppins', sans-serif;
+}
+
+.login-container {
+    width: 90%;
+    max-width: 1000px;
+    background: #fff;
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.2);
+    display: flex;
+    min-height: 600px;
+}
+
+.login-info {
+    flex: 1;
+    background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.9)), 
+                url('https://images.unsplash.com/photo-1544441893-675973e31985?q=80&w=1000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+    padding: 50px;
+    color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    position: relative;
+}
+
+.login-info::before {
+    content: "";
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 1px);
+    background-size: 20px 20px;
+    opacity: 0.3;
+}
+
+.login-info h2 {
+    font-weight: 700;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    border-left: 5px solid #e74c3c;
+    padding-left: 20px;
+}
+
+.login-info p {
+    font-size: 1.1rem;
+    line-height: 1.8;
+    opacity: 0.9;
+}
+
+.info-box {
+    background: rgba(255, 255, 255, 0.1);
+    backdrop-filter: blur(10px);
+    padding: 20px;
+    border-radius: 15px;
+    margin-top: 30px;
+    border: 1px solid rgba(255, 255, 255, 0.2);
+}
+
+.info-box h5 {
+    color: #e74c3c;
+    font-weight: 600;
+}
+
+.login-form {
+    flex: 1;
+    padding: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.login-form h3 {
+    font-weight: 700;
+    color: #2c3e50;
+    margin-bottom: 10px;
+}
+
+.login-form p {
+    color: #7f8c8d;
+    margin-bottom: 30px;
+}
+
+.btn-login {
+    background: #e74c3c;
+    color: white;
+    border: none;
+    padding: 12px;
+    border-radius: 10px;
+    font-weight: 600;
+    font-size: 1.1rem;
+    transition: all 0.3s;
+    margin-top: 20px;
+}
+
+.btn-login:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+    color: white;
+}
+
+.footer-text {
+    text-align: center;
+    margin-top: 30px;
+    font-size: 0.85rem;
+    color: #95a5a6;
+}
+
+@media (max-width: 850px) {
+    .login-info {
+        display: none;
+    }
+    .login-container {
+        max-width: 450px;
+    }
+}

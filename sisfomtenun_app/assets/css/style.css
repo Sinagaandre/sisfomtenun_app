@@ -1,0 +1,142 @@
+/* 
+   Global Style for SISFOMTENUN App 
+   Karya Tulis Ilmiah - Kapita Selekta
+*/
+
+:root {
+    --primary-color: #2c3e50;
+    --secondary-color: #34495e;
+    --accent-color: #3498db;
+    --light-bg: #f4f6f9;
+    --white: #ffffff;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: var(--light-bg);
+}
+
+/* Sidebar Styles */
+.sidebar {
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 260px;
+    background: linear-gradient(180deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    padding-top: 20px;
+    overflow-y: auto;
+    z-index: 1000;
+    box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+    transition: all 0.3s;
+}
+
+.sidebar h4 {
+    font-weight: 700;
+    letter-spacing: 1px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    margin-bottom: 20px;
+}
+
+.sidebar a {
+    padding: 15px 25px;
+    text-decoration: none;
+    font-size: 15px;
+    color: rgba(255,255,255,0.8);
+    display: block;
+    transition: all 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.sidebar a:hover {
+    background-color: rgba(255,255,255,0.1);
+    color: var(--white);
+    padding-left: 30px;
+}
+
+.sidebar a.active {
+    background-color: rgba(255,255,255,0.15);
+    color: var(--white);
+    border-left: 4px solid var(--accent-color);
+}
+
+/* Content Area Styles */
+.content {
+    margin-left: 260px;
+    padding: 30px;
+    transition: all 0.3s;
+}
+
+/* Card Styles */
+.card {
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.05);
+    margin-bottom: 30px;
+    background: var(--white);
+    overflow: hidden;
+}
+
+.card-header {
+    background-color: var(--white);
+    border-bottom: 1px solid #eee;
+    padding: 20px 25px;
+    font-weight: 600;
+    color: var(--primary-color);
+}
+
+/* Table Styles */
+.table thead th {
+    background-color: #f8f9fa;
+    border-bottom: 2px solid #e9ecef;
+    color: #6c757d;
+    font-weight: 600;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    letter-spacing: 0.5px;
+}
+
+.table tbody tr {
+    transition: all 0.2s;
+}
+
+.table tbody tr:hover {
+    background-color: #f8f9fa;
+    transform: scale(1.005);
+    box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    z-index: 10;
+    position: relative;
+}
+
+/* Utility Classes */
+.page-header {
+    margin-bottom: 30px;
+}
+
+.page-title {
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-bottom: 5px;
+}
+
+.fade-in {
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .sidebar {
+        width: 100%;
+        height: auto;
+        position: relative;
+    }
+    .content {
+        margin-left: 0;
+    }
+}
